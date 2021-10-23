@@ -27,7 +27,7 @@ def get_month(index_day):
 def get_months_by_array(array_index_day):
     array_of_months = []
     for index in array_index_day:
-        array_of_months.append(get_month(index))
+        array_of_months.append(get_month(int(index)))
     return np.array(array_of_months)
 
 def get_clean_data(path_station_coordinates, path_X_data):
@@ -42,16 +42,17 @@ def get_clean_data(path_station_coordinates, path_X_data):
     post_array = [x.split("_") for x in array]
     # print(post_array)
     Id = [x[0] for x in post_array]
-    month = [x[1] for x in post_array]
+    days = [x[1] for x in post_array]
     hour = [x[2] for x in post_array]
 
     # Warning add if to do it only on train (features does not exist on test)
     del df['date']
     del df['number_sta']
 
-    df['number_sta'] = Id
-    df['month'] = month
+    df['index_day'] = days
     df['hour'] = hour
+    df['month'] = get_months_by_array(days)
+    df['number_sta'] = Id
 
     return df
 
@@ -59,6 +60,12 @@ def get_clean_data(path_station_coordinates, path_X_data):
 if __name__ == '__main__':
 
     # PATHS :
-    path_station_coordinates  = '.././Other/Other/stations_coordinates.csv'
+    path_station_coordinates = '.././/Other/stations_coordinates.csv'
     path_X_data = '.././Train/Train/X_station_train.csv'
+
+    df = get_clean_data(path_station_coordinates, path_X_data)
+    print("Shape with precip Nan", df.shape)
+    df = df[df['precip'].notna()]
+    print("Shape without precip Nan", df.shape)
+
 
