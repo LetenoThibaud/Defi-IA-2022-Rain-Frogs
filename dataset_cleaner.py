@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from IPython.core.display import display
+from icecream import ic
 
 def get_month(index_day):
-    index_day = index_day % 365 + 1
+    # index_day = index_day % 365 + 1
     dict_month = {
         1 : 31,
         2 : 28,
@@ -30,13 +31,12 @@ def get_months_by_array(array_index_day):
         array_of_months.append(get_month(int(index)))
     return np.array(array_of_months)
 
-def get_clean_data(path_station_coordinates, path_X_data):
+def get_clean_data(path_station_coordinates, path_X_data, dataset_type):
     coords = pd.read_csv(path_station_coordinates)
-
-    param = 'hu'
-    df = pd.read_csv(path_X_data, parse_dates=['date'], infer_datetime_format=True)
-
-    df = df.merge(coords, on=['number_sta'], how='left')
+    if dataset_type == 'test':
+        df = pd.read_csv(path_X_data)
+    else:
+        df = pd.read_csv(path_X_data, parse_dates=['date'], infer_datetime_format=True)
 
     array = df['Id'].astype(str).to_numpy()
     post_array = [x.split("_") for x in array]
@@ -45,15 +45,23 @@ def get_clean_data(path_station_coordinates, path_X_data):
     days = [x[1] for x in post_array]
     hour = [x[2] for x in post_array]
 
-    # Warning add if to do it only on train (features does not exist on test)
-    del df['date']
-    del df['number_sta']
+    if dataset_type == 'test':
+        df['index_day'] = days
+        df['hour'] = hour
+        df['number_sta'] = Id
+    else :
+        # Warning add if to do it only on train (features does not exist on test)
+        del df['date']
+        del df['number_sta']
 
-    df['index_day'] = days
-    df['hour'] = hour
-    df['month'] = get_months_by_array(days)
-    df['number_sta'] = Id
+        df['index_day'] = days
+        df['hour'] = hour
+        df['month'] = get_months_by_array(days)
+        df['number_sta'] = Id
 
+    df['number_sta'] = df['number_sta'].astype(int)
+    coords['number_sta'] = coords['number_sta'].astype(int)
+    df = df.merge(coords, on=['number_sta'], how='left')
     return df
 
 

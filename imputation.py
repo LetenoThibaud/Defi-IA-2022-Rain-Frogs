@@ -8,7 +8,7 @@ import timeit
 from icecream import ic
 
 
-def coordinate_based_imputation(X, n_neighbors=3, remove_precip=True):
+def coordinate_based_imputation_train(X, n_neighbors=3, remove_precip=True):
     if remove_precip:
         # Search for the NaN in the 'precip' columns and remove the corresponding rows (7%)
         X = X[X['precip'].notna()]
@@ -56,6 +56,70 @@ def coordinate_based_imputation(X, n_neighbors=3, remove_precip=True):
     return new_dataframe
 
 
+def coordinate_based_imputation_test(X, n_neighbors=3, remove_precip=True):
+    if remove_precip:
+        # Search for the NaN in the 'precip' columns and remove the corresponding rows (7%)
+        X = X[X['precip'].notna()]
+
+    new_dataframe = pd.DataFrame()
+    new_dataframe['number_sta'] = X['number_sta']
+    new_dataframe['month'] = X['month']
+    new_dataframe['height_sta'] = X['height_sta']
+    new_dataframe['Id'] = X['Id']
+
+    # create a dataframe filled with the features we used to compute the KNN
+    knn_dataframe = X[['lat', 'lon', 'hour', 'index_day']]
+    # delete features we don't impute in X to save space
+    del X['number_sta']
+    del X['month']
+    del X['hour']
+    del X['index_day']
+    del X['height_sta']
+    del X['Id']
+    del X['lat']
+    del X['lon']
+
+    if remove_precip:
+        new_dataframe['precip'] = X['precip']
+        del X['precip']
+
+    for feature in X.columns.tolist():
+        start = timeit.default_timer()
+        knn_dataframe[feature] = X[[feature]]
+        print('# of missing values in col:', feature, knn_dataframe.isnull().sum().sum())
+        del X[feature]
+        imputer = KNNImputer(missing_values=np.nan, n_neighbors=n_neighbors,
+                             metric='nan_euclidean', weights='distance')
+        temp_data = imputer.fit_transform(knn_dataframe)
+        new_dataframe[feature] = temp_data[0:, 4]
+        stop = timeit.default_timer()
+        print('Running Time ' + feature + ':', stop - start)
+        del knn_dataframe[feature]
+    new_dataframe['lon'] = knn_dataframe[['lon']]
+    new_dataframe['lat'] = knn_dataframe[['lat']]
+    new_dataframe['index_day'] = knn_dataframe[['index_day']]
+    new_dataframe['hour'] = knn_dataframe[['hour']]
+    return new_dataframe
+
+
+def coordinate_based_imputation(X, dataset_type, n_neighbors=3, remove_precip=True):
+    """
+    :param X: array containing NaN values
+    :param dataset_type: can 'test' or 'train'
+    :param n_neighbors: if strategy kNN, gives the number of neighbors to consider
+    :param remove_precip: boolean to remove the rows where there is a NaN in the precip column
+    :return:
+    """
+    if dataset_type == 'train':
+        return coordinate_based_imputation_train(X, n_neighbors=n_neighbors, remove_precip=remove_precip)
+    elif dataset_type == 'test':
+        return coordinate_based_imputation_test(X, n_neighbors=n_neighbors, remove_precip=remove_precip)
+    else :
+        print("WARNING : wrong argument in function coordinate_based_imputation must be 'train' or 'test'")
+        return pd.DataFrame()
+
+
+
 def knn_imputation(X, type='knn_coord', n_neighbors=3, fill_value= 0, remove_precip=True):
     """
     :param X: array containing NaN values
@@ -82,14 +146,34 @@ def knn_imputation(X, type='knn_coord', n_neighbors=3, fill_value= 0, remove_pre
     return imputer.fit_transform(X)
 
 
+def fill_Y_train_Nan(path_station_coordinates, path_Y_data, n_neighbors=3):
+    coords = pd.read_csv(path_station_coordinates)
+    df = pd.read_csv(path_Y_data, parse_dates=['date'], infer_datetime_format=True)
+    df = df.merge(coords, on=['number_sta'], how='left')
+    """for feature in df .columns.tolist():
+        print('# of missing values in col:', feature, df[[feature]].isnull().sum().sum())"""
+    imputer = KNNImputer(missing_values=np.nan, n_neighbors=n_neighbors,
+                         metric='nan_euclidean', weights='distance')
+    return imputer.fit_transform(df)
+
+
 if __name__ == '__main__':
     ic.configureOutput(includeContext=True)
     path_station_coordinates = '.././/Other/stations_coordinates.csv'
-    path_X_data = '.././Train/Train/X_station_train.csv'
+    """path_X_data = '.././Train/Train/X_station_train.csv'
+    path_Y_data = '.././Train/Train/Y_train.csv'
+    # y = fill_Y_train_Nan(path_station_coordinates, path_Y_data)
     X = get_clean_data(path_station_coordinates, path_X_data)
     X = X.head(1000)
     ic(X.isnull().sum().sum())
-    new_X = coordinate_based_imputation(X, remove_precip=True)
+    new_X = coordinate_based_imputation(X, 'train', remove_precip=True)
     ic(X)
-    ic(new_X)
+    ic(new_X.columns.tolist())
+    ic(new_X.isnull().sum().sum())"""
+
+    path_X_data = '.././Test/Test/X_station_test.csv'
+    X = get_clean_data(path_station_coordinates, path_X_data, 'test')
+    X = X.head(1000)
+    ic(X.isnull().sum().sum())
+    new_X = coordinate_based_imputation(X, 'test', remove_precip=False)
     ic(new_X.isnull().sum().sum())
