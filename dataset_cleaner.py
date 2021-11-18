@@ -1,4 +1,5 @@
-import import_all
+#! /usr/bin/env python3
+from import_all import *
 
 def get_month(index_day):
     # index_day = index_day % 365 + 1

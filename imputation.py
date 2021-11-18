@@ -1,25 +1,28 @@
-from sklearn.impute import KNNImputer, SimpleImputer
-from sklearn.neighbors import NearestNeighbors
-import numpy as np
-import pandas as pd
-from dataset_cleaner import get_clean_data
-from IPython.core.display import display
-import timeit
-from icecream import ic
+#! /usr/bin/env python3
+from import_all import *
 
 
 def coordinate_based_imputation_train(X, n_neighbors=3, remove_precip=True):
-    list_index_day = list(set(X['index_day'].tolist()))
-    list_index_hour = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17',
-                       '18', '19', '20', '21', '22', '23']
-
+    list_index_day = list(set(X['day'].tolist()))
+    list_index_hour = list(range(24))
+    print(f"loop : {len(list_index_day) * len(list_index_hour)} iterations to be expected.")
+    i = 0
     data = pd.DataFrame(columns=X.columns)
+    t_total = time.time()
     for day in list_index_day:
         for hour in list_index_hour:
-            print(day, hour)
-            data_to_append = subset_coordinate_based_imputation_train(X, hour, day)
+            t = time.time()
+            print(f"\n{i}/{len(list_index_day) * len(list_index_hour)} - day : {day}".ljust(10), f"hour : {hour}".ljust(10), sep=" - ")
+            if i<3465 :
+                print("skip")
+                i+=1
+                continue
+            data_to_append = subset_coordinate_based_imputation_train(X, hour, day, n_neighbors=n_neighbors,
+                                                                      remove_precip=remove_precip)
             # print(data_to_append)
             data = data.append(data_to_append)
+            print(f"elapsed time : {time.time() - t:.2f}s - total : {time.time() - t_total:.2f}s")
+            i += 1
     return data
 
 
@@ -31,19 +34,26 @@ def columns_full_nan(X):
 
 
 def subset_coordinate_based_imputation_train(dataset, hour, day, n_neighbors=3, remove_precip=True):
-    X = dataset.loc[(dataset['hour'] == hour) & (dataset['index_day'] == day)]
+    X = dataset.loc[(dataset['hour'] == hour) & (dataset['day'] == day)]
     nb_while = 1
+    print("start subset loop")
+    i = 0
     while columns_full_nan(X):
+        print(i, end="..")
+        i+=1
         if int(hour) - nb_while >= 0:
-            X = X.append(dataset.loc[(dataset['hour'] == str(int(hour) - nb_while)) & (dataset['index_day'] == day)], ignore_index = True)
+            X = X.append(dataset.loc[(dataset['hour'] == int(int(hour) - nb_while)) & (dataset['day'] == day)],
+                         ignore_index=True)
         if int(hour) + nb_while <= 23:
-            X = X.append(dataset.loc[(dataset['hour'] == str(int(hour) + nb_while)) & (dataset['index_day'] == day)], ignore_index = True)
+            X = X.append(dataset.loc[(dataset['hour'] == int(int(hour) + nb_while)) & (dataset['day'] == day)],
+                         ignore_index=True)
         nb_while += 1
 
     if remove_precip:
         # Search for the NaN in the 'precip' columns and remove the corresponding rows (7%)
         X = X[X['precip'].notna()]
 
+    print("create 'new_dataframe'")
     new_dataframe = pd.DataFrame()
     new_dataframe['number_sta'] = X['number_sta']
     new_dataframe['month'] = X['month']
@@ -51,12 +61,12 @@ def subset_coordinate_based_imputation_train(dataset, hour, day, n_neighbors=3, 
     new_dataframe['Id'] = X['Id']
 
     # create a dataframe filled with the features we used to compute the KNN
-    knn_dataframe = X[['lat', 'lon', 'hour', 'index_day']]
+    knn_dataframe = X[['lat', 'lon', 'hour', 'day']]
     # delete features we don't impute in X to save space
     del X['number_sta']
     del X['month']
     del X['hour']
-    del X['index_day']
+    del X['day']
     del X['height_sta']
     del X['Id']
     del X['lat']
@@ -66,9 +76,11 @@ def subset_coordinate_based_imputation_train(dataset, hour, day, n_neighbors=3, 
         new_dataframe['precip'] = X['precip']
         del X['precip']
 
+    print(f"for loop 'feature in {X.columns.tolist()}'")
     for feature in X.columns.tolist():
+        print(feature,end="..")
         start = timeit.default_timer()
-        print(X.loc[:, [feature]])
+        # print(X.loc[:, [feature]])
         knn_dataframe[feature] = X.loc[:, [feature]]  # X[[feature]]
         # ic(knn_dataframe)
         # print('# of missing values in col:', feature, knn_dataframe.isnull().sum().sum())
@@ -76,21 +88,29 @@ def subset_coordinate_based_imputation_train(dataset, hour, day, n_neighbors=3, 
         imputer = KNNImputer(missing_values=np.nan, n_neighbors=n_neighbors,
                              metric='nan_euclidean', weights='distance')
         temp_data = imputer.fit_transform(knn_dataframe)
-        # print
+
+        print(feature,type(feature))
+        print(temp_data,type(temp_data))
         try:
-            print(feature)
-            print(temp_data)
             new_dataframe[feature] = temp_data[0:, 4]
-        except:
-            print(feature)
-            print(temp_data)
-            exit(0)
+        except Exception as e:
+            import sys
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print("\n\n\tERROR\n\n")
+            print(exc_type, fname, exc_tb.tb_lineno)
+            print("\n\n")
+
+            print(feature,  type(feature))
+            print(temp_data,type(temp_data))
+            exit(-2)
+
         stop = timeit.default_timer()
         # print('Running Time ' + feature + ':', stop - start)
         del knn_dataframe[feature]
     new_dataframe['lon'] = knn_dataframe[['lon']]
     new_dataframe['lat'] = knn_dataframe[['lat']]
-    new_dataframe['index_day'] = knn_dataframe[['index_day']]
+    new_dataframe['day'] = knn_dataframe[['day']]
     new_dataframe['hour'] = knn_dataframe[['hour']]
     return new_dataframe
 
@@ -107,12 +127,12 @@ def coordinate_based_imputation_test(X, n_neighbors=3, remove_precip=True):
     new_dataframe['Id'] = X['Id']
 
     # create a dataframe filled with the features we used to compute the KNN
-    knn_dataframe = X[['lat', 'lon', 'hour', 'index_day']]
+    knn_dataframe = X[['lat', 'lon', 'hour', 'day']]
     # delete features we don't impute in X to save space
     del X['number_sta']
     del X['month']
     del X['hour']
-    del X['index_day']
+    del X['day']
     del X['height_sta']
     del X['Id']
     del X['lat']
@@ -136,12 +156,12 @@ def coordinate_based_imputation_test(X, n_neighbors=3, remove_precip=True):
         del knn_dataframe[feature]
     new_dataframe['lon'] = knn_dataframe[['lon']]
     new_dataframe['lat'] = knn_dataframe[['lat']]
-    new_dataframe['index_day'] = knn_dataframe[['index_day']]
+    new_dataframe['day'] = knn_dataframe[['day']]
     new_dataframe['hour'] = knn_dataframe[['hour']]
     return new_dataframe
 
 
-def coordinate_based_imputation(X, dataset_type, n_neighbors=3, remove_precip=True):
+def coordinate_based_imputation(X, dataset_type="train", n_neighbors=3, remove_precip=True):
     """
     :param X: array containing NaN values
     :param dataset_type: can 'test' or 'train'
@@ -153,13 +173,12 @@ def coordinate_based_imputation(X, dataset_type, n_neighbors=3, remove_precip=Tr
         return coordinate_based_imputation_train(X, n_neighbors=n_neighbors, remove_precip=remove_precip)
     elif dataset_type == 'test':
         return coordinate_based_imputation_test(X, n_neighbors=n_neighbors, remove_precip=remove_precip)
-    else :
+    else:
         print("WARNING : wrong argument in function coordinate_based_imputation must be 'train' or 'test'")
         return pd.DataFrame()
 
 
-
-def knn_imputation(X, type='knn_coord', n_neighbors=3, fill_value= 0, remove_precip=True):
+def knn_imputation(X, type='knn_coord', n_neighbors=3, fill_value=0, remove_precip=True):
     """
     :param X: array containing NaN values
     :param type: strategy to use to replace the values, can be 'knn', 'knn_coord', 'mean', "median", "most_frequent"
