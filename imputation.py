@@ -17,14 +17,29 @@ def coordinate_based_imputation_train(X, n_neighbors=3, remove_precip=True):
     for day in list_index_day:
         for hour in list_index_hour:
             print(day, hour)
-            subset_data = X.loc[(X['hour'] == hour) & (X['index_day'] == day)]
-            data_to_append = subset_coordinate_based_imputation_train(subset_data)
+            data_to_append = subset_coordinate_based_imputation_train(X, hour, day)
             # print(data_to_append)
             data = data.append(data_to_append)
     return data
 
 
-def subset_coordinate_based_imputation_train(X, n_neighbors=3, remove_precip=True):
+def columns_full_nan(X):
+    for feature in X.columns.tolist():
+        if X[feature].isnull().sum() == X.shape[1]:
+            return True
+    return False
+
+
+def subset_coordinate_based_imputation_train(dataset, hour, day, n_neighbors=3, remove_precip=True):
+    X = dataset.loc[(dataset['hour'] == hour) & (dataset['index_day'] == day)]
+    nb_while = 1
+    while columns_full_nan(X):
+        if int(hour) - nb_while >= 0:
+            X = X.append(dataset.loc[(dataset['hour'] == str(int(hour) - nb_while)) & (dataset['index_day'] == day)], ignore_index = True)
+        if int(hour) + nb_while <= 23:
+            X = X.append(dataset.loc[(dataset['hour'] == str(int(hour) + nb_while)) & (dataset['index_day'] == day)], ignore_index = True)
+        nb_while += 1
+
     if remove_precip:
         # Search for the NaN in the 'precip' columns and remove the corresponding rows (7%)
         X = X[X['precip'].notna()]
