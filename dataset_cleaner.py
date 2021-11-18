@@ -1,8 +1,4 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from IPython.core.display import display
-from icecream import ic
+import import_all
 
 def get_month(index_day):
     # index_day = index_day % 365 + 1
