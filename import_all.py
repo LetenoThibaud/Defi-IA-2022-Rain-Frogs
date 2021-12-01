@@ -12,6 +12,7 @@ import warnings
 import time
 import os
 import datetime
+from pprint import pprint
 
 __all__ = [
     'np',
@@ -25,5 +26,6 @@ __all__ = [
     "warnings",
     "time",
     "os",
-    "datetime"
+    "datetime",
+    "pprint"
 ]

@@ -77,22 +77,6 @@ def get_month(day_index):
     return (i + 1) % 12
 
 
-def aggregate_x(x):
-    x['number_sta'] = x['number_sta'].astype("category")
-    x['Id'] = x['Id'].astype("category")
-    # x['day'] = x['day'].astype("category")
-    # x['month'] = x['month'].astype("category")
-    # x['lat'] = x['lat'].astype("category")
-    # x['lon'] = x['lon'].astype("category")
-    # x['height_sta'] = x['height_sta'].astype("category")
-
-    print(21, "\n\n", x)
-    x = x.groupby(["Id", "number_sta", "day", "month", "lat", "lon", "height_sta"]).agg(pd.Series.sum)
-    print(22, "\n\n", x)
-
-    return x
-
-
 def get_ground_truth(x):
     first_date = datetime.datetime(2016, 1, 1)
     last_date = datetime.datetime(2017, 12, 31)

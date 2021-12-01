@@ -4,7 +4,7 @@ import time
 from import_all import *
 
 from get_files import get_data_train, get_data_raw
-from before_imputation import preprocess_x_y_columns, get_ground_truth, merge_x_y, merge_x_station_coord, aggregate_x
+from before_imputation import preprocess_x_y_columns, get_ground_truth, merge_x_y, merge_x_station_coord
 
 from imputation import knn_imputation
 
@@ -77,12 +77,45 @@ def average_imputation(df_path, verbose=True):
     return df
 
 
-def save_file(x, save_path):
+def x_station_by_day(x):
+    # x['number_sta'] = x['number_sta'].astype("category")
+    x['Id'] = x['Id'].astype("category")
+    # x["date"] = x["date"].astype("category")
+    # x['day'] = x['day'].astype("category")
+    # x['month'] = x['month'].astype("category")
+    # x['lat'] = x['lat'].astype("category")
+    # x['lon'] = x['lon'].astype("category")
+    # x['height_sta'] = x['height_sta'].astype("category")
+
+    x = x.drop("hour", axis=1)
+    x["date"] = x["date"].apply(lambda d: d.split(" ")[0])
+
+    print(21, "\n\n", x)
+    x = x.groupby(["Id"]).agg({"number_sta": 'first',
+                               "wind_speed": np.mean,
+                               "temperature": np.mean,
+                               "dew_point": np.mean,
+                               "humidity": np.mean,
+                               "wind_direction": np.mean,
+                               "precip": np.sum,
+                               "month": 'first',
+                               "timestamp": 'first',
+                               "latitude": 'first',
+                               "longitude": 'first',
+                               "height_sta": 'first',
+                               "ground_truth": 'first',
+                               "date": 'first'})
+    print("-" * 100)
+    print(22, "\n\n", x)
+    return x
+
+
+def save_file(x, save_path, index=False):
     # save in file
     if save_path:
         if not os.path.exists("/".join(save_path.split("/")[:-1])):
             os.mkdir("/".join(save_path.split("/")[:-1]))
-        x.to_csv(save_path, index=False)
+        x.to_csv(save_path, index=index)
         print(f"file saved in '{save_path}'")
 
 
@@ -108,7 +141,14 @@ def main(task):
 
         save_file(x, f"../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_station_coord_{k}nn_imputed.csv")
 
+    elif task == "x_by_day" or task == 3:
+        print("Start x_station_by_day")
+        x = get_data_raw("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_station_coord_2nn_imputed.csv")
+
+        x = x_station_by_day(x)
+
+        save_file(x, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_station_coord_2nn_imputed_by_day.csv", index=True)
+
 
 if __name__ == "__main__":
-    main(task=0)
-    main(task=2)
+    main(task=3)
