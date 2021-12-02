@@ -21,9 +21,9 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
         print("ERROR : {} or {} key not found id file {}.".format("Id", prediction_label, input_path))
         exit(-2)
 
-    if len(df) > 100000:  # assuming the data used is not _by_day.csv
-        df = df[["Id", prediction_label]]
+    df = df[["Id", prediction_label]]
 
+    if len(df) > 100000:  # assuming the data used is not _by_day.csv
         df = df.groupby(["Id"]).agg({prediction_label: pd.Series.sum})
         df.set_index("Id", inplace=True)
 
