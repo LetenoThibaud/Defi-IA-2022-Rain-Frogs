@@ -21,16 +21,23 @@ def main(input_path="", output_path="", prediction_label="prediction"):
         print("ERROR : {} or {} key not found id file {}.".format("Id", prediction_label, input_path))
         exit(-2)
 
-    df = df[["Id", prediction_label]]
+    if len(df) > 100000:  # assuming the data used is not _by_day.csv
+        df = df[["Id", prediction_label]]
 
-    df = df.groupby(["Id"]).agg({prediction_label: pd.Series.sum})
-    df.set_index("Id", inplace=True)
+        df = df.groupby(["Id"]).agg({prediction_label: pd.Series.sum})
+        df.set_index("Id", inplace=True)
 
-    if len(df) != 183498:
+    baseline = pd.read_csv("../Test/Test/Baselines/Baseline_observation_test.csv")
+    submission = baseline.drop("Prediction",axis=1).merge(df, how="left", on="Id")
+
+    print(f"Sum of NaNs :\n\n{submission.isna().sum()}\n\n")
+
+    if len(submission) != 183498:
         print("Warning : len(df) != len(Baseline) i.e. {} != {}".format(len(df), 183498))
 
-    df.to_csv(output_path)
-    return df
+    submission.to_csv(output_path)
+    print(f"File save as {output_path}.")
+    return submission
 
 
 if __name__ == "__main__":
