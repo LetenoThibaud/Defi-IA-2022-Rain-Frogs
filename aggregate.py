@@ -36,7 +36,7 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
         print("Warning : len(df) != len(Baseline) i.e. {} != {}".format(len(submission), 183498))
 
     submission.to_csv(output_path)
-    print(f"File save as {output_path}.")
+    print(f"File save as {output_path}.", index=False)
     return submission
 
 
