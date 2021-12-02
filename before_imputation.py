@@ -5,39 +5,38 @@ from import_all import *
 warnings.filterwarnings("ignore")
 
 
-def preprocess_x_y_columns(x, y=None, data_type="train"):
-    # preprocess x
-    # only proceed if date is in columns, i.e. if x_train supposedly
-    # if "date" in x.columns:
-    #     x = x.drop("date", axis=1)
-    # x["date"] = x["date"].apply(lambda d: d.split(":")[0].split(" ")[0])
-    x["date"] = pd.to_datetime(x["date"], format='%Y-%m-%d %H')
-    x["hour"] = x["date"].apply(lambda d: d.hour)
-    x["month"] = x["date"].apply(lambda d: d.month)
-    x["timestamp"] = x["date"].apply(lambda d: d.timestamp())
+def preprocess_x_columns(x, data_type="train"):
+    if data_type == "train":
+        # preprocess x
+        # only proceed if date is in columns, i.e. if x_train supposedly
+        # if "date" in x.columns:
+        #     x = x.drop("date", axis=1)
+        # x["date"] = x["date"].apply(lambda d: d.split(":")[0].split(" ")[0])
+        x["date"] = pd.to_datetime(x["date"], format='%Y-%m-%d %H')
+        x["hour"] = x["date"].apply(lambda d: d.hour)
+        x["month"] = x["date"].apply(lambda d: d.month)
+        x["timestamp"] = x["date"].apply(lambda d: d.timestamp())
 
-    # only proceed if number_sta is in columns, i.e. if x_test supposedly
-    if "number_sta" not in x.columns:
-        x["number_sta"] = x["Id"].apply(lambda i: int(i.split("_")[0]))
+        # only proceed if number_sta is in columns, i.e. if x_test supposedly
+        if "number_sta" not in x.columns:
+            x["number_sta"] = x["Id"].apply(lambda i: int(i.split("_")[0]))
 
-    # x["day"] = x["date"].apply(lambda date: date.day)
+        # x["day"] = x["date"].apply(lambda date: date.day)
 
-    # if data_type == "test":
-    #     x["day"] = x["Id"].apply(lambda id_day_hour: int(id_day_hour.split("_")[1]))
-    #     x["hour"] = x["Id"].apply(lambda id_day_hour: int(id_day_hour.split("_")[2]))
-    #     x["month"] = x['day'].apply(lambda d: get_month(d))
+        # if data_type == "test":
+        #     x["day"] = x["Id"].apply(lambda id_day_hour: int(id_day_hour.split("_")[1]))
+        #     x["hour"] = x["Id"].apply(lambda id_day_hour: int(id_day_hour.split("_")[2]))
+        #     x["month"] = x['day'].apply(lambda d: get_month(d))
 
-    x["Id"] = x["Id"].apply(lambda i: "_".join(i.split("_")[:2]))
+        x["Id"] = x["Id"].apply(lambda i: "_".join(i.split("_")[:2]))
 
-    # preprocess y
-    if type(y) != type(None):
-        # only proceed if date is in columns, i.e. if y_train supposedly
-        if "date" in y.columns:
-            y["date"] = pd.to_datetime(y["date"], format='%Y-%m-%d')
-            y["date"] = y["date"].apply(lambda date: date.day)
-        return x, y
-    else:
-        return x
+    elif data_type == "test":
+        x["number_sta"] = x["Id"].apply(lambda idx: int(idx.split("_")[0]))
+        # x["year"] = x["Id"].apply(lambda idx: 2016+(int(idx.split("_")[1]) // 366))
+        x["hour"] = x["Id"].apply(lambda idx: int(idx.split("_")[2]))
+        x["Id"] = x["Id"].apply(lambda idx: "_".join(idx.split("_")[:-1]))
+
+    return x
 
 
 def merge_x_station_coord(x, coords_path):

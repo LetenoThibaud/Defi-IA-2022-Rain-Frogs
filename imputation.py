@@ -11,18 +11,30 @@ from sklearn.metrics import mean_squared_error
 pd.options.mode.chained_assignment = None
 
 
-def knn_imputation(x, k=2, save_path_scores=""):
+def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
     # x = x.dropna(subset=['precip'])
+
+    if file_type == "test":
+        x["random_day"] = x["Id"].apply(lambda idx: int(idx.split("_")[1]))
 
     # Imputation data by interpolation
     print("x_clean : dropna")
     x_clean = x.dropna()
 
     print("x_fit : standard, transform")
-    x_fit = StandardScaler().fit_transform(x_clean[['timestamp', 'latitude', 'longitude']])
+    if file_type == "train":
+        x_fit = StandardScaler().fit_transform(x_clean[['timestamp', 'latitude', 'longitude']])
+    else:  # file_type == "test":
+        x_fit = StandardScaler().fit_transform(x_clean[['random_day', "hour", 'latitude', 'longitude']])
+
+        # we spread the day very far one from another so the the k-nn doesn't confuse the days
+        x_fit[:, 0] = x_fit[:, 0] * 1000
 
     print("start loop")
     labels = ['wind_direction', 'wind_speed', 'temperature', 'humidity', 'dew_point']
+    if file_type == "test":
+        labels += ["precip"]
+
     scores = dict()
     for label in labels:
         print("\tstart imputation :", label)
@@ -39,7 +51,10 @@ def knn_imputation(x, k=2, save_path_scores=""):
 
         # Imputation
         # row with the missing label information
-        x_missing = x[x[label].isna()][['timestamp', 'latitude', 'longitude']]
+        if file_type == "train":
+            x_missing = x[x[label].isna()][['timestamp', 'latitude', 'longitude']]
+        else:  # file_type=="test":
+            x_missing = x[x[label].isna()][["random_day", "hour", "latitude", "longitude"]]
         # Normalization
         x_missing = StandardScaler().fit_transform(x_missing)
 
@@ -63,7 +78,7 @@ def knn_imputation(x, k=2, save_path_scores=""):
         if not os.path.exists(save_path_scores):
             os.mkdir(save_path_scores)
         # save the score of precision
-        save_path_scores = save_path_scores + f'{k}-NN_imputation_scores.txt'
+        save_path_scores = save_path_scores + f'{k}-NN_imputation_scores_{file_type}.txt'
         with open(save_path_scores, 'w') as f:
             f.write(f"List of imputation score (mean_squared_error) with {k}-NN.\n\n")
             max_len_key = max([len(key) for key in list(scores.keys())])
@@ -72,5 +87,7 @@ def knn_imputation(x, k=2, save_path_scores=""):
             for key, value in scores.items():
                 f.write(f"\t'{str(key).ljust(max_len_key + 1)}' : {str(value).rjust(max_len_value)},\n")
             f.write("}")
+
+    x = x.drop("random_day", axis=1)
 
     return x
