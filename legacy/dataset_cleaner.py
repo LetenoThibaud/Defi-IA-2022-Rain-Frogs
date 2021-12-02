@@ -1,35 +1,35 @@
-#! /usr/bin/env python3
-from import_all import *
-
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from IPython.core.display import display
+from icecream import ic
 
 def get_month(index_day):
     # index_day = index_day % 365 + 1
     dict_month = {
-        1: 31,
-        2: 28,
-        3: 31,
-        4: 30,
-        5: 31,
-        6: 30,
-        7: 31,
-        8: 31,
-        9: 30,
-        10: 31,
-        11: 30,
-        12: 31
+        1 : 31,
+        2 : 28,
+        3 : 31,
+        4 : 30,
+        5 : 31,
+        6 : 30,
+        7 : 31,
+        8 : 31,
+        9 : 30,
+        10 : 31,
+        11 : 30,
+        12 : 31
     }
     for key in dict_month.keys():
         index_day = index_day - dict_month[key]
         if index_day <= 0:
             return key
 
-
 def get_months_by_array(array_index_day):
     array_of_months = []
     for index in array_index_day:
         array_of_months.append(get_month(int(index)))
     return np.array(array_of_months)
-
 
 def get_clean_data(path_station_coordinates, path_X_data, dataset_type):
     coords = pd.read_csv(path_station_coordinates)
@@ -49,7 +49,7 @@ def get_clean_data(path_station_coordinates, path_X_data, dataset_type):
         df['index_day'] = days
         df['hour'] = hour
         df['number_sta'] = Id
-    else:
+    else :
         # Warning add if to do it only on train (features does not exist on test)
         del df['date']
         del df['number_sta']
@@ -66,6 +66,7 @@ def get_clean_data(path_station_coordinates, path_X_data, dataset_type):
 
 
 if __name__ == '__main__':
+
     # PATHS :
     path_station_coordinates = '.././/Other/stations_coordinates.csv'
     path_X_data = '.././Train/Train/X_station_train.csv'
@@ -74,3 +75,5 @@ if __name__ == '__main__':
     print("Shape with precip Nan", df.shape)
     df = df[df['precip'].notna()]
     print("Shape without precip Nan", df.shape)
+
+
