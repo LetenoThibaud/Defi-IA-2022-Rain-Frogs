@@ -6,22 +6,30 @@ from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
+from pprint import pprint
 
 
 def main(x_station_path: str, features: list):
     df = pd.read_csv(x_station_path)
     features = StandardScaler().fit_transform(df[features])
-    target = df["ground_truth"].values
-
-    x_train, x_test, y_train, y_test = train_test_split(features, target, test_size=0.25, random_state=42)
+    target = df["ground_truth"].values.reshape([1,-1])
 
     regression_poly = PolynomialFeatures(degree=12,
                                          include_bias=True)
+
+    x_train, x_test, y_train, y_test = train_test_split(features,
+                                                        target,
+                                                        test_size=0.25,
+                                                        random_state=42)
+
     x_poly_train = regression_poly.fit(x_train)
+    x_poly_test = regression_poly.fit(x_test)
 
     regression_lin = LinearRegression()
     regression_lin.fit(x_poly_train, y_train)
-    
+
+    score = regression_lin.score(x_poly_test, y_test)
+    print(score)
 
 
 if __name__ == "__main__":
