@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 
 
-def main(input_path="", output_path="", prediction_label="prediction"):
+def main(input_path="", output_path="", prediction_label="Prediction"):
     if input_path == "":
         input_path = "./prediction.csv"
     if output_path == "":
@@ -30,10 +30,10 @@ def main(input_path="", output_path="", prediction_label="prediction"):
     baseline = pd.read_csv("../Test/Test/Baselines/Baseline_observation_test.csv")
     submission = baseline.drop("Prediction",axis=1).merge(df, how="left", on="Id")
 
-    print(f"Sum of NaNs :\n\n{submission.isna().sum()}\n\n")
+    print(f"\nSum of NaNs :\n\n{submission.isna().sum()}\n\n")
 
-    if len(submission) != 183498:
-        print("Warning : len(df) != len(Baseline) i.e. {} != {}".format(len(df), 183498))
+    if len(submission) != 85140:
+        print("Warning : len(df) != len(Baseline) i.e. {} != {}".format(len(submission), 183498))
 
     submission.to_csv(output_path)
     print(f"File save as {output_path}.")
