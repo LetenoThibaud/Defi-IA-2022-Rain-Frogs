@@ -1,0 +1,719 @@
+start 2-NN imputation
+
+X_all_test : 22/12/2021 16:21:11
+x_clean : dropna
+x_fit : standard, transform
+get labels with missing values.
+WARNING : high na ratio (>0.25) for following feature(s) :
+wind_speed (m/s) ------------------------------------------------------ : 1540256 --- ratio : 0.54
+wind_direction (deg) -------------------------------------------------- : 1540662 --- ratio : 0.54
+wind_component_u (m/s) ------------------------------------------------ : 1540664 --- ratio : 0.54
+wind_component_v (m/s) ------------------------------------------------ : 1540664 --- ratio : 0.54
+temperature (K) ------------------------------------------------------- : 724355 ---- ratio : 0.26
+humidity (%) ---------------------------------------------------------- : 1435739 --- ratio : 0.51
+dew_point (K) --------------------------------------------------------- : 1436188 --- ratio : 0.51
+condensation (Bool) --------------------------------------------------- : 1436543 --- ratio : 0.51
+current hour precipitations (kg/m^2) ---------------------------------- : 751467 ---- ratio : 0.27
+next hour precipitation (kg/m^2) -------------------------------------- : 751467 ---- ratio : 0.27
+3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K) ------ : 1013350 --- ratio : 0.36
+3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 1013350 --- ratio : 0.36
+3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 1013350 --- ratio : 0.36
+3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 1013350 --- ratio : 0.36
+3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 1013350 --- ratio : 0.36
+3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 1013350 --- ratio : 0.36
+3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 1013350 --- ratio : 0.36
+
+start loop
+	start imputation : wind_speed (m/s)
+	-> Successful imputation of the column: wind_speed (m/s)
+	start imputation : wind_direction (deg)
+	-> Successful imputation of the column: wind_direction (deg)
+	start imputation : wind_component_u (m/s)
+	-> Successful imputation of the column: wind_component_u (m/s)
+	start imputation : wind_component_v (m/s)
+	-> Successful imputation of the column: wind_component_v (m/s)
+	start imputation : temperature (K)
+	-> Successful imputation of the column: temperature (K)
+	start imputation : humidity (%)
+	-> Successful imputation of the column: humidity (%)
+	start imputation : dew_point (K)
+	-> Successful imputation of the column: dew_point (K)
+	start imputation : condensation (Bool)
+	-> Successful imputation of the column: condensation (Bool)
+	start imputation : current hour precipitations (kg/m^2)
+	-> Successful imputation of the column: current hour precipitations (kg/m^2)
+	start imputation : next hour precipitation (kg/m^2)
+	-> Successful imputation of the column: next hour precipitation (kg/m^2)
+	start imputation : 2D_Arome_WindSpeed (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindSpeed (m/s)
+	start imputation : 2D_Arome_WindDirection (deg)
+	-> Successful imputation of the column: 2D_Arome_WindDirection (deg)
+	start imputation : 2D_Arome_WindComponentU (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindComponentU (m/s)
+	start imputation : 2D_Arome_WindComponentV (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindComponentV (m/s)
+	start imputation : 2D_Arome_Temperature (K)
+	-> Successful imputation of the column: 2D_Arome_Temperature (K)
+	start imputation : 2D_Arome_DewPoint (T)
+	-> Successful imputation of the column: 2D_Arome_DewPoint (T)
+	start imputation : 2D_Arome_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 2D_Arome_RelavtiveHumidity (%)
+	start imputation : 2D_Arome_TotalPrecipitation (kg/m^2)
+	-> Successful imputation of the column: 2D_Arome_TotalPrecipitation (kg/m^2)
+	start imputation : 2D_Arome_MeaSeaLevelPressure (Pa)
+	-> Successful imputation of the column: 2D_Arome_MeaSeaLevelPressure (Pa)
+	start imputation : 2D_Arpege_WindSpeed (m/s)
+	-> Successful imputation of the column: 2D_Arpege_WindSpeed (m/s)
+	start imputation : 2D_Arpege_WindDirection (deg)
+	-> Successful imputation of the column: 2D_Arpege_WindDirection (deg)
+	start imputation : 2D_Arpege_WindComponentU (m/s)
+	-> Successful imputation of the column: 2D_Arpege_WindComponentU (m/s)
+	start imputation : 2D_Arpege_WindComponentV (m/s)
+	-> Successful imputation of the column: 2D_Arpege_WindComponentV (m/s)
+	start imputation : 2D_Arpege_Temperature (K)
+	-> Successful imputation of the column: 2D_Arpege_Temperature (K)
+	start imputation : 2D_Arpege_DewPoint (T)
+	-> Successful imputation of the column: 2D_Arpege_DewPoint (T)
+	start imputation : 2D_Arpege_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 2D_Arpege_RelavtiveHumidity (%)
+	start imputation : 2D_Arpege_TotalPrecipitation (kg/m^2)
+	-> Successful imputation of the column: 2D_Arpege_TotalPrecipitation (kg/m^2)
+	start imputation : 2D_Arpege_MeaSeaLevelPressure (Pa)
+	-> Successful imputation of the column: 2D_Arpege_MeaSeaLevelPressure (Pa)
+	start imputation : 3D_Arpege_height_Pressure_20m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_20m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_100m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_100m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_500m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_500m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_875m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_875m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_1375m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_1375m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_2000m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_2000m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_3000m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_3000m (Pa)
+	start imputation : 3D_Arpege_isobar_1000hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_950hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_950hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_950hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_950hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_925hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_925hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_925hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_925hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_850hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_850hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_850hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_850hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_700hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_700hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_700hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_700hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_600hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_600hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_600hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_600hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_500hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_500hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_500hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_500hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2)
+loop done
+write scores down
+file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed.csv'
+DONE - elapsed : 0:27:13.48
+
+X_all_2016 : 22/12/2021 16:48:25
+x_train : get timestamp
+x_clean : dropna
+x_fit : standard, transform
+get labels with missing values.
+WARNING : high na ratio (>0.25) for following feature(s) :
+wind_speed (m/s) ------------------------------------------------------ : 1536519 --- ratio : 0.54
+wind_direction (deg) -------------------------------------------------- : 1537946 --- ratio : 0.54
+wind_component_u (m/s) ------------------------------------------------ : 1537950 --- ratio : 0.54
+wind_component_v (m/s) ------------------------------------------------ : 1537950 --- ratio : 0.54
+temperature (K) ------------------------------------------------------- : 763630 ---- ratio : 0.27
+humidity (%) ---------------------------------------------------------- : 1374877 --- ratio : 0.48
+dew_point (K) --------------------------------------------------------- : 1376441 --- ratio : 0.48
+condensation (Bool) --------------------------------------------------- : 1376441 --- ratio : 0.48
+current hour precipitations (kg/m^2) ---------------------------------- : 806881 ---- ratio : 0.28
+next hour precipitation (kg/m^2) -------------------------------------- : 806882 ---- ratio : 0.28
+
+start loop
+	start imputation : wind_speed (m/s)
+	-> Successful imputation of the column: wind_speed (m/s)
+	start imputation : wind_direction (deg)
+	-> Successful imputation of the column: wind_direction (deg)
+	start imputation : wind_component_u (m/s)
+	-> Successful imputation of the column: wind_component_u (m/s)
+	start imputation : wind_component_v (m/s)
+	-> Successful imputation of the column: wind_component_v (m/s)
+	start imputation : temperature (K)
+	-> Successful imputation of the column: temperature (K)
+	start imputation : humidity (%)
+	-> Successful imputation of the column: humidity (%)
+	start imputation : dew_point (K)
+	-> Successful imputation of the column: dew_point (K)
+	start imputation : condensation (Bool)
+	-> Successful imputation of the column: condensation (Bool)
+	start imputation : current hour precipitations (kg/m^2)
+	-> Successful imputation of the column: current hour precipitations (kg/m^2)
+	start imputation : next hour precipitation (kg/m^2)
+	-> Successful imputation of the column: next hour precipitation (kg/m^2)
+	start imputation : 2D_Arome_WindSpeed (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindSpeed (m/s)
+	start imputation : 2D_Arome_WindDirection (deg)
+	-> Successful imputation of the column: 2D_Arome_WindDirection (deg)
+	start imputation : 2D_Arome_WindComponentU (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindComponentU (m/s)
+	start imputation : 2D_Arome_WindComponentV (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindComponentV (m/s)
+	start imputation : 2D_Arome_Temperature (K)
+	-> Successful imputation of the column: 2D_Arome_Temperature (K)
+	start imputation : 2D_Arome_DewPoint (T)
+	-> Successful imputation of the column: 2D_Arome_DewPoint (T)
+	start imputation : 2D_Arome_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 2D_Arome_RelavtiveHumidity (%)
+	start imputation : 2D_Arome_TotalPrecipitation (kg/m^2)
+	-> Successful imputation of the column: 2D_Arome_TotalPrecipitation (kg/m^2)
+	start imputation : 2D_Arome_MeaSeaLevelPressure (Pa)
+	-> Successful imputation of the column: 2D_Arome_MeaSeaLevelPressure (Pa)
+	start imputation : 3D_Arpege_height_Pressure_20m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_20m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_100m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_100m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_500m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_500m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_875m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_875m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_1375m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_1375m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_2000m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_2000m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_3000m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_3000m (Pa)
+	start imputation : 3D_Arpege_isobar_1000hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_950hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_950hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_950hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_950hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_925hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_925hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_925hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_925hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_850hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_850hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_850hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_850hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_700hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_700hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_700hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_700hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_600hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_600hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_600hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_600hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_500hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_500hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_500hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_500hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2)
+loop done
+write scores down
+file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed.csv'
+DONE - elapsed : 0:29:13.56
+
+X_all_2016 : 22/12/2021 17:17:38
+x_train : get timestamp
+x_clean : dropna
+x_fit : standard, transform
+get labels with missing values.
+WARNING : high na ratio (>0.25) for following feature(s) :
+wind_speed (m/s) ------------------------------------------------------ : 1506624 --- ratio : 0.53
+wind_direction (deg) -------------------------------------------------- : 1507030 --- ratio : 0.53
+wind_component_u (m/s) ------------------------------------------------ : 1507030 --- ratio : 0.53
+wind_component_v (m/s) ------------------------------------------------ : 1507030 --- ratio : 0.53
+temperature (K) ------------------------------------------------------- : 759709 ---- ratio : 0.27
+humidity (%) ---------------------------------------------------------- : 1343326 --- ratio : 0.47
+dew_point (K) --------------------------------------------------------- : 1344237 --- ratio : 0.47
+condensation (Bool) --------------------------------------------------- : 1344239 --- ratio : 0.47
+current hour precipitations (kg/m^2) ---------------------------------- : 795743 ---- ratio : 0.28
+next hour precipitation (kg/m^2) -------------------------------------- : 795743 ---- ratio : 0.28
+2D_Arpege_WindSpeed (m/s) --------------------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_WindDirection (deg) ----------------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_WindComponentU (m/s) ---------------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_WindComponentV (m/s) ---------------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_Temperature (K) --------------------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_DewPoint (T) ------------------------------------------------ : 733200 ---- ratio : 0.26
+2D_Arpege_RelavtiveHumidity (%) --------------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_TotalPrecipitation (kg/m^2) --------------------------------- : 733200 ---- ratio : 0.26
+2D_Arpege_MeaSeaLevelPressure (Pa) ------------------------------------ : 733200 ---- ratio : 0.26
+3D_Arpege_isobar_1000hpa_Temperature (K) ------------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K) ------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%) ------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_WindSpeed (m/s) ------------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_WindDirection (deg) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_WindComponentU (m/s) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_WindComponentV (m/s) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s) ---------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_Temperature (K) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_RelavtiveHumidity (%) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_WindSpeed (m/s) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_WindDirection (deg) --------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_WindComponentU (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_WindComponentV (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2) ------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_Temperature (K) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_RelavtiveHumidity (%) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_WindSpeed (m/s) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_WindDirection (deg) --------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_WindComponentU (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_WindComponentV (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2) ------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_Temperature (K) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_RelavtiveHumidity (%) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_WindSpeed (m/s) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_WindDirection (deg) --------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_WindComponentU (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_WindComponentV (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2) ------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_Temperature (K) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_RelavtiveHumidity (%) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_WindSpeed (m/s) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_WindDirection (deg) --------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_WindComponentU (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_WindComponentV (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2) ------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_Temperature (K) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_RelavtiveHumidity (%) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_WindSpeed (m/s) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_WindDirection (deg) --------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_WindComponentU (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_WindComponentV (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2) ------------------------ : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_Temperature (K) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K) ------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_RelavtiveHumidity (%) ------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_WindSpeed (m/s) ------------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_WindDirection (deg) --------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_WindComponentU (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_WindComponentV (m/s) -------------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s) ----------------------- : 901550 ---- ratio : 0.32
+3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2) ------------------------ : 901550 ---- ratio : 0.32
+
+start loop
+	start imputation : wind_speed (m/s)
+	-> Successful imputation of the column: wind_speed (m/s)
+	start imputation : wind_direction (deg)
+	-> Successful imputation of the column: wind_direction (deg)
+	start imputation : wind_component_u (m/s)
+	-> Successful imputation of the column: wind_component_u (m/s)
+	start imputation : wind_component_v (m/s)
+	-> Successful imputation of the column: wind_component_v (m/s)
+	start imputation : temperature (K)
+	-> Successful imputation of the column: temperature (K)
+	start imputation : humidity (%)
+	-> Successful imputation of the column: humidity (%)
+	start imputation : dew_point (K)
+	-> Successful imputation of the column: dew_point (K)
+	start imputation : condensation (Bool)
+	-> Successful imputation of the column: condensation (Bool)
+	start imputation : current hour precipitations (kg/m^2)
+	-> Successful imputation of the column: current hour precipitations (kg/m^2)
+	start imputation : next hour precipitation (kg/m^2)
+	-> Successful imputation of the column: next hour precipitation (kg/m^2)
+	start imputation : 2D_Arome_WindSpeed (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindSpeed (m/s)
+	start imputation : 2D_Arome_WindDirection (deg)
+	-> Successful imputation of the column: 2D_Arome_WindDirection (deg)
+	start imputation : 2D_Arome_WindComponentU (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindComponentU (m/s)
+	start imputation : 2D_Arome_WindComponentV (m/s)
+	-> Successful imputation of the column: 2D_Arome_WindComponentV (m/s)
+	start imputation : 2D_Arome_Temperature (K)
+	-> Successful imputation of the column: 2D_Arome_Temperature (K)
+	start imputation : 2D_Arome_DewPoint (T)
+	-> Successful imputation of the column: 2D_Arome_DewPoint (T)
+	start imputation : 2D_Arome_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 2D_Arome_RelavtiveHumidity (%)
+	start imputation : 2D_Arome_TotalPrecipitation (kg/m^2)
+	-> Successful imputation of the column: 2D_Arome_TotalPrecipitation (kg/m^2)
+	start imputation : 2D_Arome_MeaSeaLevelPressure (Pa)
+	-> Successful imputation of the column: 2D_Arome_MeaSeaLevelPressure (Pa)
+	start imputation : 2D_Arpege_WindSpeed (m/s)
+	-> Successful imputation of the column: 2D_Arpege_WindSpeed (m/s)
+	start imputation : 2D_Arpege_WindDirection (deg)
+	-> Successful imputation of the column: 2D_Arpege_WindDirection (deg)
+	start imputation : 2D_Arpege_WindComponentU (m/s)
+	-> Successful imputation of the column: 2D_Arpege_WindComponentU (m/s)
+	start imputation : 2D_Arpege_WindComponentV (m/s)
+	-> Successful imputation of the column: 2D_Arpege_WindComponentV (m/s)
+	start imputation : 2D_Arpege_Temperature (K)
+	-> Successful imputation of the column: 2D_Arpege_Temperature (K)
+	start imputation : 2D_Arpege_DewPoint (T)
+	-> Successful imputation of the column: 2D_Arpege_DewPoint (T)
+	start imputation : 2D_Arpege_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 2D_Arpege_RelavtiveHumidity (%)
+	start imputation : 2D_Arpege_TotalPrecipitation (kg/m^2)
+	-> Successful imputation of the column: 2D_Arpege_TotalPrecipitation (kg/m^2)
+	start imputation : 2D_Arpege_MeaSeaLevelPressure (Pa)
+	-> Successful imputation of the column: 2D_Arpege_MeaSeaLevelPressure (Pa)
+	start imputation : 3D_Arpege_height_Pressure_20m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_20m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_100m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_100m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_500m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_500m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_875m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_875m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_1375m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_1375m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_2000m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_2000m (Pa)
+	start imputation : 3D_Arpege_height_Pressure_3000m (Pa)
+	-> Successful imputation of the column: 3D_Arpege_height_Pressure_3000m (Pa)
+	start imputation : 3D_Arpege_isobar_1000hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_1000hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_950hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_950hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_950hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_950hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_950hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_925hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_925hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_925hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_925hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_925hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_850hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_850hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_850hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_850hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_850hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_700hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_700hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_700hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_700hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_700hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_600hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_600hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_600hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_600hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_600hpa_Geopotential (m^2/s^2)
+	start imputation : 3D_Arpege_isobar_500hpa_Temperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_Temperature (K)
+	start imputation : 3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_PseudoAdiabaticPotentialTemperature (K)
+	start imputation : 3D_Arpege_isobar_500hpa_RelavtiveHumidity (%)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_RelavtiveHumidity (%)
+	start imputation : 3D_Arpege_isobar_500hpa_WindSpeed (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindSpeed (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_WindDirection (deg)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindDirection (deg)
+	start imputation : 3D_Arpege_isobar_500hpa_WindComponentU (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindComponentU (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_WindComponentV (m/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_WindComponentV (m/s)
+	start imputation : 3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_VerticalVelocity (Pa/s)
+	start imputation : 3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2)
+	-> Successful imputation of the column: 3D_Arpege_isobar_500hpa_Geopotential (m^2/s^2)
+loop done
+write scores down
+file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed.csv'
+DONE - elapsed : 0:36:26.95
+imputation complete : 22/12/2021 17:54:05  - total elapsed : 1:32:54.04
