@@ -1,7 +1,4 @@
 #! /usr/bin/env python3
-import pandas
-import pandas as pd
-
 from import_all import *
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsRegressor
@@ -9,6 +6,20 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 
 pd.options.mode.chained_assignment = None
+
+
+def now():
+    now = datetime.datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    return dt_string
+
+
+def elapsed(t):
+    total = np.round(time.time() - t, 2)
+    seconds = np.round(total % 60, 2)
+    minutes = int(total // 60 % 60)
+    hours = int(total // 60 // 60)
+    return str(hours) + ":" + str(minutes) + ":" + str(seconds)
 
 
 def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
@@ -30,12 +41,12 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
         print("x_clean : dropna")
         x_clean = x.dropna()
         print("x_fit : standard, transform")
-        x_fit = StandardScaler().fit_transform(x_clean[['timestamp', 'latitude', 'longitude']])
+        x_fit = StandardScaler().fit_transform(x_clean[['timestamp', "altitude (m)", 'latitude', 'longitude']])
     else:  # file_type == "test":
         print("x_clean : dropna")
         x_clean = x.dropna()
         print("x_fit : standard, transform")
-        x_fit = StandardScaler().fit_transform(x_clean[['day', "hour", 'latitude', 'longitude']])
+        x_fit = StandardScaler().fit_transform(x_clean[['day', "hour", "altitude (m)", 'latitude', 'longitude']])
         # we spread the day very far one from another so that the k-nn doesn't confuse the days
         x_fit[:, 0] = x_fit[:, 0] * 1000
 
@@ -110,17 +121,44 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
     return x
 
 
+def save_file(x, save_path, index=False):
+    # save in file
+    if save_path:
+        if not os.path.exists("/".join(save_path.split("/")[:-1])):
+            os.mkdir("/".join(save_path.split("/")[:-1]))
+        x.to_csv(save_path, index=index)
+        print(f"file saved in '{save_path}'")
+
+
 if __name__ == "__main__":
-    print("Impute X_all_test.csv")
-    df_test = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test.csv")
-    knn_imputation(df_test, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/", file_type="X_all_test")
+    t_total = time.time()
+    print("start 2-NN imputation")
 
-    print("Impute X_all_2017.csv")
-    df_test = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017.csv")
-    knn_imputation(df_test, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
-                   file_type="X_all_2017")
+    t_test = time.time()
+    print("\nX_all_test :", now())
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test.csv")
+    df = knn_imputation(df, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
+                        file_type="X_all_test")
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed.csv")
+    print("DONE - elapsed :", elapsed(t_test))
+    del df
 
-    print("Impute X_all_2016.csv")
-    df_test = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016.csv")
-    knn_imputation(df_test, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
-                   file_type="X_all_2016")
+    t_2016 = time.time()
+    print("\nX_all_2016 :", now())
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016.csv")
+    df = knn_imputation(df, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
+                        file_type="X_all_2016")
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed.csv")
+    print("DONE - elapsed :", elapsed(t_2016))
+    del df
+
+    t_2017 = time.time()
+    print("\nX_all_2016 :", now())
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017.csv")
+    df = knn_imputation(df, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
+                        file_type="X_all_2017")
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed.csv")
+    print("DONE - elapsed :", elapsed(t_2017))
+    del df
+
+    print("imputation complete :", now(), " - total elapsed :", elapsed(t_total))
