@@ -82,9 +82,9 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
         # Imputation
         # row with the missing label information
         if "2016" in file_type or "2017" in file_type:
-            x_missing = x[x[label].isna()][['timestamp', 'latitude', 'longitude']]
+            x_missing = x[x[label].isna()][['timestamp', "altitude (m)", 'latitude', 'longitude']]
         else:  # file_type=="test":
-            x_missing = x[x[label].isna()][["day", "hour", "latitude", "longitude"]]
+            x_missing = x[x[label].isna()][["day", "hour", "altitude (m)", "latitude", "longitude"]]
         # Normalization
         x_missing = StandardScaler().fit_transform(x_missing)
 
