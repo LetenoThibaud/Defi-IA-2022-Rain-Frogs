@@ -14,28 +14,47 @@ pd.options.mode.chained_assignment = None
 def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
     # x = x.dropna(subset=['precip'])
 
-    if file_type == "test":
-        x["random_day"] = x["Id"].apply(lambda idx: int(idx.split("_")[1]))
-
     # Imputation data by interpolation
-    print("x_clean : dropna")
-    x_clean = x.dropna()
 
-    print("x_fit : standard, transform")
-    if file_type == "train":
+    if "2016" in file_type or "2017" in file_type:
+        print("x_train : get timestamp")
+        if "2016" in file_type:
+            x["year"] = 2016
+        elif "2017" in file_type:
+            x["year"] = 2017
+        x['datetime'] = pd.to_datetime(x[['year', 'month', 'day', "hour"]])
+        x["timestamp"] = x["datetime"].values.astype(np.int64) // 10 ** 9
+        x = x.drop("year", axis=1)
+        x = x.drop("datetime", axis=1)
+
+        print("x_clean : dropna")
+        x_clean = x.dropna()
+        print("x_fit : standard, transform")
         x_fit = StandardScaler().fit_transform(x_clean[['timestamp', 'latitude', 'longitude']])
     else:  # file_type == "test":
-        x_fit = StandardScaler().fit_transform(x_clean[['random_day', "hour", 'latitude', 'longitude']])
-
+        print("x_clean : dropna")
+        x_clean = x.dropna()
+        print("x_fit : standard, transform")
+        x_fit = StandardScaler().fit_transform(x_clean[['day', "hour", 'latitude', 'longitude']])
         # we spread the day very far one from another so that the k-nn doesn't confuse the days
         x_fit[:, 0] = x_fit[:, 0] * 1000
 
-    print("start loop")
-    labels = ['wind_direction', 'wind_speed', 'temperature', 'humidity', 'dew_point']
-    if file_type == "test":
-        labels += ["precip"]
+    print("get labels with missing values.")
+    labels = []
+    trigger_warning = True
+    for col in x.columns:
+        total_na = x[col].isna().sum()
+        ratio_na = np.round(total_na / len(x), 2)
+        if ratio_na >= 0.25:
+            if trigger_warning:
+                print("WARNING : high na ratio (>0.25) for following feature(s) :")
+                trigger_warning = False
+            print(col, "-" * (70 - len(col)), ":", total_na, "-" * (10 - len(str(total_na))), "ratio :", ratio_na)
+        if total_na > 0:
+            labels.append(col)
 
     scores = dict()
+    print("\nstart loop")
     for label in labels:
         print("\tstart imputation :", label)
         y = x_clean[[label]]
@@ -51,10 +70,10 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
 
         # Imputation
         # row with the missing label information
-        if file_type == "train":
+        if "2016" in file_type or "2017" in file_type:
             x_missing = x[x[label].isna()][['timestamp', 'latitude', 'longitude']]
         else:  # file_type=="test":
-            x_missing = x[x[label].isna()][["random_day", "hour", "latitude", "longitude"]]
+            x_missing = x[x[label].isna()][["day", "hour", "latitude", "longitude"]]
         # Normalization
         x_missing = StandardScaler().fit_transform(x_missing)
 
@@ -88,6 +107,20 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
                 f.write(f"\t'{str(key).ljust(max_len_key + 1)}' : {str(value).rjust(max_len_value)},\n")
             f.write("}")
 
-    x = x.drop("random_day", axis=1)
-
     return x
+
+
+if __name__ == "__main__":
+    print("Impute X_all_test.csv")
+    df_test = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test.csv")
+    knn_imputation(df_test, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/", file_type="X_all_test")
+
+    print("Impute X_all_2017.csv")
+    df_test = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017.csv")
+    knn_imputation(df_test, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
+                   file_type="X_all_2017")
+
+    print("Impute X_all_2016.csv")
+    df_test = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016.csv")
+    knn_imputation(df_test, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
+                   file_type="X_all_2016")
