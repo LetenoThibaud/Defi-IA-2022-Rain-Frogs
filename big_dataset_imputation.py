@@ -22,11 +22,35 @@ def elapsed(t):
     return str(hours) + ":" + str(minutes) + ":" + str(seconds)
 
 
-def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
-    # x = x.dropna(subset=['precip'])
+def clean_df_nan(df, col_thld=0.4, row_thld=0.4, clean_row=True):
+    """
+    :param df: dataframe to filter
+    :param col_thld: proportion of nans below which the column is deleted
+    :param row_thld: proportion of nans below which the row is deleted
+    :return: a list of columns to delete, a list of rows to delete
+    """
+    # first, remove columns with too many nans
+    col_to_delete = []
+    for k, v in dict(df.isna().sum(axis=0) / len(df)).items():
+        if v >= col_thld:
+            col_to_delete.append(k)
+    for col in col_to_delete:
+        del df[col]
 
-    # Imputation data by interpolation
+    if clean_row:
+        # second, remove row with still too many nans
+        df = df.dropna(axis=0, thresh=int((1 - row_thld) * len(df.columns)))
+    return (df, col_to_delete)
 
+
+def knn_imputation(x, k=2, save_path_scores="", file_type="train", col_to_delete=[]):
+    print("if necessary, remove columns with too much nans is other datasets")
+    for col in col_to_delete:
+        if col in x.columns:
+            print("remove column :", col)
+            del x[col]
+
+    # Imputation data by interpolation of k-nn
     if "2016" in file_type or "2017" in file_type:
         print("x_train : get timestamp")
         if "2016" in file_type:
@@ -66,8 +90,11 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
 
     scores = dict()
     print("\nstart loop")
+    progression = 0
     for label in labels:
-        print("\tstart imputation :", label)
+        print("\t", str(int(progression / len(labels) * 100)).rjust(3), "%", end="\r")
+        progression += 1
+        # print("\tstart imputation :", label)
         y = x_clean[[label]]
 
         # Evaluation
@@ -99,9 +126,12 @@ def knn_imputation(x, k=2, save_path_scores="", file_type="train"):
         fill_na["index"] = index
         fill_na.set_index("index", inplace=True)
         x[[label]] = x[[label]].fillna(fill_na)
-        print('\t-> Successful imputation of the column:', label)
-
+        # print('\t-> Successful imputation of the column:', label)
+    print("\t", str(100).rjust(3), "%")
     print("loop done")
+
+    if "timestamp" in x.columns:
+        del x["timestamp"]
 
     if save_path_scores:
         print("write scores down")
@@ -130,34 +160,81 @@ def save_file(x, save_path, index=False):
         print(f"file saved in '{save_path}'")
 
 
+def clean_datasets():
+    t_total = time.time()
+    print("get the rows and columns to delete.")
+    col_to_delete = set()
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_id.csv")
+    df, cols = clean_df_nan(df)
+    col_to_delete = set(list(col_to_delete) + cols)
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_clean.csv")
+    del df
+
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_id.csv")
+    df, cols = clean_df_nan(df)
+    col_to_delete = set(list(col_to_delete) + cols)
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_clean.csv")
+    del df
+
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_id.csv")
+    df, cols = clean_df_nan(df, clean_row=False)
+    col_to_delete = set(list(col_to_delete) + cols)
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_clean.csv")
+    del df
+
+    del cols
+    print("list of all columns to delete because too much nans :")
+    print(col_to_delete)
+    print("DONE - elapsed :", elapsed(t_total))
+    return list(col_to_delete)
+
+
 if __name__ == "__main__":
+    all_columns_to_delete = clean_datasets()
+
+    # K-nn imputation
     t_total = time.time()
     print("start 2-NN imputation")
 
     t_test = time.time()
     print("\nX_all_test :", now())
-    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test.csv")
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_clean.csv")
     df = knn_imputation(df, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
-                        file_type="X_all_test")
-    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed.csv")
+                        file_type="X_all_test", col_to_delete=all_columns_to_delete)
+
+    df["wind_direction_cos"] = np.cos(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df["wind_direction_sin"] = np.sin(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df.loc[df["wind_speed (m/s)"] == 0, "wind_direction_cos"] = 0
+
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed.zip")
     print("DONE - elapsed :", elapsed(t_test))
     del df
 
     t_2016 = time.time()
     print("\nX_all_2016 :", now())
-    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016.csv")
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_clean.csv")
     df = knn_imputation(df, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
-                        file_type="X_all_2016")
-    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed.csv")
+                        file_type="X_all_2016", col_to_delete=all_columns_to_delete)
+
+    df["wind_direction_cos"] = np.cos(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df["wind_direction_sin"] = np.sin(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df.loc[df["wind_speed (m/s)"] == 0, "wind_direction_cos"] = 0
+
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed.zip")
     print("DONE - elapsed :", elapsed(t_2016))
     del df
 
     t_2017 = time.time()
     print("\nX_all_2016 :", now())
-    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017.csv")
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_clean.csv")
     df = knn_imputation(df, k=2, save_path_scores="../preprocessed_data_Defi-IA-2022-Rain-Frogs/",
-                        file_type="X_all_2017")
-    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed.csv")
+                        file_type="X_all_2017", col_to_delete=all_columns_to_delete)
+
+    df["wind_direction_cos"] = np.cos(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df["wind_direction_sin"] = np.sin(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df.loc[df["wind_speed (m/s)"] == 0, "wind_direction_cos"] = 0
+
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed.zip")
     print("DONE - elapsed :", elapsed(t_2017))
     del df
 

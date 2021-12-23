@@ -25,7 +25,7 @@ def x_station_by_day(x: pd.DataFrame):
     x = x.drop("hour_cos", axis=1)
 
     actions = {col: np.mean for col in x.columns}
-    x["Id"] = x["station_id"].astype(str) + "_" + x["day"].astype(str)
+    x["Id"] = x["station_id"].astype(str) + "_" + x["month"].astype(str) + "_" + x["day"].astype(str)
     x['Id'] = x['Id'].astype("category")
     set_first = ["station_id", "altitude (m)", "latitude", "longitude", "latitude_idx", "longitude_idx", "month",
                  "month_cos", "month_sin", "day", "shore_distance (m)"]
