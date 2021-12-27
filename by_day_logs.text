@@ -1,14 +1,14 @@
 start aggregation
 
-X_all_test : 22/12/2021 17:54:59
-file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed_by_day.csv'
-DONE - elapsed : 0:1:14.04
+X_all_test : 23/12/2021 21:01:18
+file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed_by_day.zip'
+DONE - elapsed : 0:0:58.58
 
-X_all_2016 : 22/12/2021 17:56:13
-file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed_by_day.csv'
-DONE - elapsed : 0:0:54.66
+X_all_2016 : 23/12/2021 21:02:16
+file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed_by_day.zip'
+DONE - elapsed : 0:1:0.3
 
-X_all_2016 : 22/12/2021 17:57:08
-file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed_by_day.csv'
-DONE - elapsed : 0:0:55.95
-aggregation complete : 22/12/2021 17:58:04  - total elapsed : 0:3:4.64
+X_all_2016 : 23/12/2021 21:03:16
+file saved in '../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed_by_day.zip'
+DONE - elapsed : 0:0:54.56
+aggregation complete : 23/12/2021 21:04:11  - total elapsed : 0:2:53.43

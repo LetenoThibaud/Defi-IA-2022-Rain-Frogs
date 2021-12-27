@@ -25,7 +25,8 @@ def x_station_by_day(x: pd.DataFrame):
     x = x.drop("hour_cos", axis=1)
 
     actions = {col: np.mean for col in x.columns}
-    x["Id"] = x["station_id"].astype(str) + "_" + x["month"].astype(str) + "_" + x["day"].astype(str)
+    del actions["Id"]
+    # x["Id"] = x["station_id"].astype(str) + "_" + x["month"].astype(str) + "_" + x["day"].astype(str)
     x['Id'] = x['Id'].astype("category")
     set_first = ["station_id", "altitude (m)", "latitude", "longitude", "latitude_idx", "longitude_idx", "month",
                  "month_cos", "month_sin", "day", "shore_distance (m)"]
@@ -52,25 +53,40 @@ if __name__ == "__main__":
 
     t_test = time.time()
     print("\nX_all_test :", now())
-    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed.csv")
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed.zip")
     df = x_station_by_day(df)
-    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed_by_day.csv")
+
+    df["wind_direction_cos"] = np.cos(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df["wind_direction_sin"] = np.sin(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df.loc[df["wind_speed (m/s)"] == 0, "wind_direction_cos"] = 0
+
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_test_imputed_by_day.zip")
     del df
     print("DONE - elapsed :", elapsed(t_test))
 
     t_2016 = time.time()
     print("\nX_all_2016 :", now())
-    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed.csv")
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed.zip")
     df = x_station_by_day(df)
-    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed_by_day.csv")
+
+    df["wind_direction_cos"] = np.cos(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df["wind_direction_sin"] = np.sin(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df.loc[df["wind_speed (m/s)"] == 0, "wind_direction_cos"] = 0
+
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2016_imputed_by_day.zip")
     del df
     print("DONE - elapsed :", elapsed(t_2016))
 
     t_2017 = time.time()
     print("\nX_all_2016 :", now())
-    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed.csv")
+    df = pd.read_csv("../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed.zip")
     df = x_station_by_day(df)
-    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed_by_day.csv")
+
+    df["wind_direction_cos"] = np.cos(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df["wind_direction_sin"] = np.sin(df["wind_direction (deg)"] / 360 * 2 * np.pi)
+    df.loc[df["wind_speed (m/s)"] == 0, "wind_direction_cos"] = 0
+
+    save_file(df, "../preprocessed_data_Defi-IA-2022-Rain-Frogs/X_all_2017_imputed_by_day.zip")
     del df
     print("DONE - elapsed :", elapsed(t_2017))
 
