@@ -10,8 +10,10 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
     if output_path == "":
         output_path = "./ready_for_submission.csv"
 
+    print("Loading",input_path)
     df = pd.read_csv(input_path)
 
+    print("Columns checks : ", end="")
     try:
         if "Id" not in df.columns:
             raise KeyError
@@ -20,21 +22,37 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
     except KeyError:
         print("ERROR : {} or {} key not found id file {}.".format("Id", prediction_label, input_path))
         exit(-2)
+    print("passed.")
 
+    print("Keep only 'Id' and",prediction_label)
     df = df[["Id", prediction_label]]
 
-    if len(df) > 100000:  # assuming the data used is not _by_day.csv
-        df = df.groupby(["Id"]).agg({prediction_label: pd.Series.sum})
-        df.set_index("Id", inplace=True)
+    df[prediction_label] = df[prediction_label].apply(lambda x : x-1)
 
+    if len(df) > 100000:  # assuming the data used is not _by_day.csv
+        print("Aggregate data by day.")
+        df["Id"] = df["Id"].astype("category")
+        df = df.groupby("Id").agg({prediction_label: pd.Series.sum})
+        # print("Set Id as index.")
+        # df.set_index("Id", inplace=True)
+
+    print("Get Baseline.")
     baseline = pd.read_csv("../Test/Test/Baselines/Baseline_observation_test.csv")
+
+    print("Remove Ids not in Baseline.")
     submission = baseline.drop("Prediction",axis=1).merge(df, how="left", on="Id")
 
     print(f"\nSum of NaNs :\n\n{submission.isna().sum()}\n\n")
+    if submission[prediction_label].isna().sum() > 0:
+        print("fill nans with average.")
+        submission[prediction_label].fillna(submission[prediction_label].mean(), inplace=True)
 
     if len(submission) != 85140:
         print("Warning : len(df) != len(Baseline) i.e. {} != {}".format(len(submission), 183498))
 
+    print("Write output to :", output_path)
+
+    df[prediction_label] = df[prediction_label].apply(lambda x : x+1)
     submission.to_csv(output_path, index=False)
     print(f"File save as {output_path}.")
     return submission
