@@ -27,9 +27,7 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
     print("Keep only 'Id' and",prediction_label)
     df = df[["Id", prediction_label]]
 
-    df[prediction_label] = df[prediction_label].apply(lambda x : x-1)
-
-    if len(df) > 100000:  # assuming the data used is not _by_day.csv
+    if False :#len(df) > 100000:  # assuming the data used is not _by_day.csv
         print("Aggregate data by day.")
         df["Id"] = df["Id"].astype("category")
         df = df.groupby("Id").agg({prediction_label: pd.Series.sum})
@@ -40,7 +38,7 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
     baseline = pd.read_csv("../Test/Test/Baselines/Baseline_observation_test.csv")
 
     print("Remove Ids not in Baseline.")
-    submission = baseline.drop("Prediction",axis=1).merge(df, how="left", on="Id")
+    submission = baseline.drop("Prediction", axis=1).merge(df, how="left", on="Id")
 
     print(f"\nSum of NaNs :\n\n{submission.isna().sum()}\n\n")
     if submission[prediction_label].isna().sum() > 0:
@@ -52,7 +50,8 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
 
     print("Write output to :", output_path)
 
-    df[prediction_label] = df[prediction_label].apply(lambda x : x+1)
+    # df[prediction_label] = df[prediction_label] + 1
+    submission[prediction_label] = submission[prediction_label] + 1
     submission.to_csv(output_path, index=False)
     print(f"File save as {output_path}.")
     return submission
