@@ -2,14 +2,34 @@
 
 import pandas as pd
 import sys
+import argparse
+
+def parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--in",
+                        dest="input_path",
+                        default="./prediction.csv",
+                        help="Path to the original file.\n\tdefault : './prediction.csv'")
+    parser.add_argument("--out",
+                        dest="output_path",
+                        default="./ready_for_submission.csv",
+                        help="Path to the output file.\n\tdefault : './ready_for_submission.csv'")
+    parser.add_argument("--pred",
+                        dest="prediction_label",
+                        default="Prediction",
+                        help="Prediction's column's name.\n\tdefault : 'Prediction'")
+    parser.add_argument("--byday",
+                        dest="by_day",
+                        default=False,
+                        help="Whether the dataset is already aggregated by day of not.\n\tdefault : False")
+    parser.add_argument("--addone",
+                        dest="add_one",
+                        default=True,
+                        help="Whether to add one to the Prediction columns or not.\n\tdefault : True")
+    return parser
 
 
-def main(input_path="", output_path="", prediction_label="Prediction"):
-    if input_path == "":
-        input_path = "./prediction.csv"
-    if output_path == "":
-        output_path = "./ready_for_submission.csv"
-
+def main(input_path="", output_path="", prediction_label="Prediction", by_day="False", add_one="True"):
     print("Loading",input_path)
     df = pd.read_csv(input_path)
 
@@ -27,7 +47,7 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
     print("Keep only 'Id' and",prediction_label)
     df = df[["Id", prediction_label]]
 
-    if False :#len(df) > 100000:  # assuming the data used is not _by_day.csv
+    if not by_day :
         print("Aggregate data by day.")
         df["Id"] = df["Id"].astype("category")
         df = df.groupby("Id").agg({prediction_label: pd.Series.sum})
@@ -50,20 +70,19 @@ def main(input_path="", output_path="", prediction_label="Prediction"):
 
     print("Write output to :", output_path)
 
-    # df[prediction_label] = df[prediction_label] + 1
-    submission[prediction_label] = submission[prediction_label] + 1
+    if add_one :
+        submission[prediction_label] = submission[prediction_label] + 1
+
     submission.to_csv(output_path, index=False)
     print(f"File save as {output_path}.")
     return submission
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        main()
-    else:
-        if len(sys.argv) == 2:
-            main(sys.argv[1])
-        elif len(sys.argv) == 3:
-            main(sys.argv[1], sys.argv[2])
-        else:
-            main(sys.argv[1], sys.argv[2], sys.argv[3])
+    parser = parser()
+    args = parser.parse_args()
+    main(input_path=args.input_path,
+         output_path=args.output_path,
+         prediction_label=args.prediction_label,
+         by_day=args.by_day,
+         add_one=args.add_one)
